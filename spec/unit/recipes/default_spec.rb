@@ -18,18 +18,22 @@ describe 'uber_nginx_cookbook::default' do
     it 'converges successfully' do
       expect { chef_run }.to_not raise_error
     end
-  end
 
-  context 'When all attributes are default, on CentOS 7.4.1708' do
-    let(:chef_run) do
-      # for a complete list of available platforms and versions see:
-      # https://github.com/customink/fauxhai/blob/master/PLATFORMS.md
-      runner = ChefSpec::ServerRunner.new(platform: 'centos', version: '7.4.1708')
-      runner.converge(described_recipe)
+    it 'should install nginx' do
+      expect(chef_run).to install_package("nginx")
     end
 
-    it 'converges successfully' do
-      expect { chef_run }.to_not raise_error
+    it 'nginx should be enabled' do
+      expect(chef_run).to enable_service("nginx")
     end
+
+    it 'nginx should be started' do
+      expect(chef_run).to start_service("nginx")
+    end
+
+    it 'should create an nginx.conf template in etc/nginx' do
+      expect(chef_run).to create_template("/etc/nginx/nginx.conf").with_variables(proxy_port: 7000)
+    end
+
   end
 end
