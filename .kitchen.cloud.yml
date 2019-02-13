@@ -1,6 +1,12 @@
 ---
 driver:
-  name: vagrant
+  name: ec2
+  region: eu-west-1
+  require_chef_omnibus: true
+  instance_type: t2.micro
+  subnet_id: subnet-0e9b6138ff1ce18f2
+  associate_public_ip: true
+  aws_ssh_key_id: DevOpsStudents
 
 provisioner:
   name: chef_zero
@@ -8,6 +14,9 @@ provisioner:
   # For example:
   #   always_update_cookbooks: <%= !ENV['CI'] %>
   always_update_cookbooks: true
+
+# transport:
+#   ssh_key: ~/.ssh/DevOpsStudents.pem
 
 verifier:
   name: inspec
