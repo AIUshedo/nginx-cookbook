@@ -14,8 +14,6 @@ verifier:
 
 platforms:
   - name: ubuntu-16.04
-    driver:
-      box: ubuntu/xenial64
 
 suites:
   - name: default
